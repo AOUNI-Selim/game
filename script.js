@@ -14,7 +14,7 @@ let play = function () {
         var usineOvni = setInterval(() => {
                 var ovni = document.createElement("div");
                 ovni.classList.add("ovnis");
-                ovni.style.left = Math.floor(Math.random() * 580) + "px"; // ne depace pas la largeur du tableau 
+                ovni.style.left = Math.floor(Math.random() * 580) + "px"; // ne depace pas la hauteur du tableau 
                 board.appendChild(ovni);
         }, 2000);
 
@@ -26,33 +26,33 @@ let play = function () {
 play();
 
 
-// game
+    /*********************************************************************************  game   *********************************************************************/ 
 
-       /*******************************************************    deplacement avion  ****************************************************/
+                      /*******************************************************    deplacement avion  ****************************************************/
 
 
-                                                /* Function qui permet de ciblé un elemnt et lui donne un style  */
+                                                /********  Function qui permet de ciblé un elemnt et lui donne un style  **********/
 function donneuse(cible,style) { 
     const element = document.querySelector(cible);
     if (element) {
         return window.getComputedStyle(element)[style];
     }
 };
-                                                            /* rajouter le tire plus tard */
+                                                    
 
 
-                                                                /* Function deplacement */
+                                                                /* Function deplacement pour le sprite */
 window.addEventListener('keydown', (e) => {
     
     let leftVoile = parseInt(donneuse('.masque','left'));
     let leftBground = parseInt(donneuse('.sprite','left'));
     let left = parseInt(window.getComputedStyle(container2).getPropertyValue('left'));
-
+    
     switch (e.key) 
        { 
            case "ArrowLeft": 
             if (e.key === 'ArrowLeft' && left >= 88 ) { 
-                console.log('gauche');
+                //console.log('gauche');
                 document.querySelector('.masque','left').style.left = leftVoile - 64 + 'px';
                 document.querySelector('.sprite','left').style.bottom = leftBground - 71 + "px";
             }
@@ -61,25 +61,45 @@ window.addEventListener('keydown', (e) => {
     
         case " ":
 
-            var laser = document.createElement('div'); // creer des nouvelles div 
-            laser.classList.add('laser1');// avec pour class laser1
+            let laser = document.createElement('div'); // creer des nouvelles div 
+            laser.classList.add('laser');// avec pour class laser1
             board.appendChild(laser);// creer dans le tableau
 
 
-            var mouvLaser = setInterval(() => {
+            let mouvLaser = setInterval(() => {
+                
+                for (let i = 0; i < ovnis.length; i++) {
+                    let ovni = ovnis[i];
+                    if (ovni != undefined) {
+                        let contoureOvni = ovni.getBoundingClientRect()// information sur la postion et la taille des ovnis
+                        let countoureLaser = laser.getBoundingClientRect()// information sur la postion et la taille du laser
+                        if (
+                            countoureLaser.left >= contoureOvni.left &&
+                            countoureLaser.right <= contoureOvni.right &&
+                            countoureLaser.top <= contoureOvni.top &&
+                            countoureLaser.bottom <= contoureOvni.bottom
+                        ) {
+                            ovni.parentElement.removeChild(ovni);
+                        }
+                    } 
+                }
+
+
+
               var laserBottom = parseInt(
                   window.getComputedStyle(laser).getPropertyValue('bottom')
               );
               
-              if (bulletbottom >= 500) {
+              if (laserBottom >= 500) {
                 clearInterval(mouvLaser);
+                console.log('je nettoie');
               }
 
-              laser.style.left = left + 'px';
+              laser.style.left = left  + 5 + 'px';
               laser.style.bottom = laserBottom + 3 + 'px'
             });
           
-            console.log('spaceBar')
+            //console.log('spaceBar')
         break;
         
         case "ArrowRight":
@@ -87,7 +107,7 @@ window.addEventListener('keydown', (e) => {
 
                 document.querySelector('.masque','left').style.left = leftVoile + 64 + 'px';
                 document.querySelector('.sprite','left').style.bottom = leftBground - 35 + "px";
-                console.log('masque a droite');
+               // console.log('masque a droite');
             }
             
         break;
@@ -100,21 +120,21 @@ window.addEventListener('keydown', (e) => {
 
 
 let board = document.getElementById('board');
+let ovnis = document.getElementsByClassName("ovnis");
 
-var deplacementOvni = setInterval(() => {
-    var ovnis = document.getElementsByClassName("ovnis");
+let deplacementOvni = setInterval(() => {
+   
   
     if (ovnis != undefined) {
-      for (var i = 0; i < ovnis.length; i++) {
+      for (let i = 0; i < ovnis.length; i++) {
         
-        var ovni = ovnis[i]; 
-        var ovniTop = parseInt(
+        let ovni = ovnis[i]; 
+        let ovniTop = parseInt(
             window.getComputedStyle(ovni).getPropertyValue('top')
         )
         if (ovniTop >= 470) {
           alert("Game Over");
-          clearInterval(deplacementOvni);
-        //   window.location.reload();
+          window.location.reload();
         }// gestion de collision les ovnis ne depassent pas la limite du tableau sinon fin du jeu et arrete la production
 
         ovni.style.top = ovniTop +  15 + "px";
