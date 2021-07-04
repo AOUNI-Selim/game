@@ -104,8 +104,13 @@ button > p{
 #score {
     position: absolute;
       top: 365px;
-      
       opacity: 0.7;
       font-size: 7em;
       color: #ea3636;
+}
+
+                        /* decompo cv */
+                
+.partie1{
+    display: none;
 }

@@ -24,7 +24,9 @@ let play = function () {
      
 };
 play();
-
+let board = document.getElementById('board');
+let ovnis = document.getElementsByClassName("ovnis");
+let score = document.getElementById("score") 
 
     /*********************************************************************************  game   *********************************************************************/ 
 
@@ -80,8 +82,12 @@ window.addEventListener('keydown', (e) => {
                             countoureLaser.bottom <= contoureOvni.bottom
                         ) {
                             ovni.parentElement.removeChild(ovni);
-                        }
-                    } 
+                            
+                            /*************************************** incrementation du score ******************************************/
+                            
+                            score.innerHTML = parseInt(document.getElementById("score").innerHTML) + 1;
+                        };
+                    };
                 }
 
 
@@ -92,10 +98,10 @@ window.addEventListener('keydown', (e) => {
               
               if (laserBottom >= 500) {
                 clearInterval(mouvLaser);
-                console.log('je nettoie');
+                // console.log('disparu');
               }
 
-              laser.style.left = left  + 5 + 'px';
+              laser.style.left = left  + 5 + 'px';//position du tir lors du mouvement 
               laser.style.bottom = laserBottom + 3 + 'px'
             });
           
@@ -116,11 +122,6 @@ window.addEventListener('keydown', (e) => {
 
 
 /********************************************************************          Ennemies      ************************************************************/
-
-
-
-let board = document.getElementById('board');
-let ovnis = document.getElementsByClassName("ovnis");
 
 let deplacementOvni = setInterval(() => {
    
@@ -143,5 +144,12 @@ let deplacementOvni = setInterval(() => {
   }, 2000);
 
  
-    
-    
+/*************************************************************************** Cv div **************************************************************************/ 
+
+compo1 = document.getElementsByClassName('partie1')
+
+
+if (score == 5) {
+    console.log('je fonctopnne');
+    alert(compo1)
+}
