@@ -7,16 +7,18 @@ let play = function () {
     //console.log('yup');
     document.getElementById('play').addEventListener('click',function () { 
         document.getElementById('board').style.display = 'block';
-        alert("Deplacement : ⬅️➡️ --   Tir : ⬆️");
+        alert("Deplacement : ⬅️➡️ --   Tir : SpaceBar");
 
 
                                      /**********************  usine a ovni qui se lance lors du click ***********************/
         var usineOvni = setInterval(() => {
-            var ovni = document.createElement("div");
-            ovni.classList.add("ovnis");
-            ovni.style.left = Math.floor(Math.random() * 580) + "px"; // ne depace pas la largeur du tableau 
-            board.appendChild(ovni);
-          }, 1500);
+                var ovni = document.createElement("div");
+                ovni.classList.add("ovnis");
+                ovni.style.left = Math.floor(Math.random() * 580) + "px"; // ne depace pas la largeur du tableau 
+                board.appendChild(ovni);
+        }, 2000);
+
+        
     
     });
      
@@ -41,14 +43,15 @@ function donneuse(cible,style) {
 
                                                                 /* Function deplacement */
 window.addEventListener('keydown', (e) => {
+    
     let leftVoile = parseInt(donneuse('.masque','left'));
     let leftBground = parseInt(donneuse('.sprite','left'));
-    let bord = board.style.width;
+    let left = parseInt(window.getComputedStyle(container2).getPropertyValue('left'));
 
     switch (e.key) 
-       { case "ArrowLeft": 
-            if (e.key === 'ArrowLeft' &&  document.querySelector('.masque','left').style.left <= 361.5 + 'px' ) { //il ne doit pas depasser le 24 px left
-                
+       { 
+           case "ArrowLeft": 
+            if (e.key === 'ArrowLeft' && left >= 88 ) { 
                 console.log('gauche');
                 document.querySelector('.masque','left').style.left = leftVoile - 64 + 'px';
                 document.querySelector('.sprite','left').style.bottom = leftBground - 71 + "px";
@@ -56,17 +59,37 @@ window.addEventListener('keydown', (e) => {
                               
         break;
     
-        case "ArrowUp":
-            alert('haut')
+        case " ":
+
+            var laser = document.createElement('div'); // creer des nouvelles div 
+            laser.classList.add('laser1');// avec pour class laser1
+            board.appendChild(laser);// creer dans le tableau
+
+
+            var mouvLaser = setInterval(() => {
+              var laserBottom = parseInt(
+                  window.getComputedStyle(laser).getPropertyValue('bottom')
+              );
+              
+              if (bulletbottom >= 500) {
+                clearInterval(mouvLaser);
+              }
+
+              laser.style.left = left + 'px';
+              laser.style.bottom = laserBottom + 3 + 'px'
+            });
+          
+            console.log('spaceBar')
         break;
         
         case "ArrowRight":
-            if (e.key == 'ArrowRight') {
-                
+            if (e.key == 'ArrowRight' && left < 576) { 
+
+                document.querySelector('.masque','left').style.left = leftVoile + 64 + 'px';
+                document.querySelector('.sprite','left').style.bottom = leftBground - 35 + "px";
+                console.log('masque a droite');
             }
-            document.querySelector('.masque','left').style.left = leftVoile + 64 + 'px';
-            document.querySelector('.sprite','left').style.bottom = leftBground - 35 + "px";
-            console.log('masque a droite');
+            
         break;
     };
 });
@@ -92,9 +115,13 @@ var deplacementOvni = setInterval(() => {
           alert("Game Over");
           clearInterval(deplacementOvni);
         //   window.location.reload();
-        }// gestion de collision les ovnis ne depassent pas la limite du tableau sinon fin du jeu
+        }// gestion de collision les ovnis ne depassent pas la limite du tableau sinon fin du jeu et arrete la production
 
         ovni.style.top = ovniTop +  15 + "px";
       }
     }
-  }, 1000);
+  }, 2000);
+
+ 
+    
+    

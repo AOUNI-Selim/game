@@ -59,6 +59,7 @@ button > p{
     border: 2px solid white;
     background-color: #0F52A0;
     display: none;
+    overflow: hidden;
   }
 #container2{
     position: absolute;
@@ -77,38 +78,33 @@ button > p{
     
 }
 
-#laser{
-    color: tomato;
-    width: 2px;
-    height: 50px;
-    position: absolute;
-    left:  30px;
-}
-
-
 
 .ovnis{
     background : url(/asset/images/ovni.png);
     position: absolute;
     background-size: contain;
     background-repeat: no-repeat;
-    width: 64px;
+    width: 30px;
     height: 30px;
 }
 
 
-
-
-
-
-
-
+.laser{
+    bottom: 35px;
+    background-color: tomato;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1px;
+    height: 9px;
+    position: absolute;
+    left: 48.77%;                      
+}
 
 
 #score {
     position: absolute;
-      top: 0px;
-      margin-left: -300px;
+      top: 365px;
+      
       opacity: 0.7;
       font-size: 7em;
       color: #ea3636;
