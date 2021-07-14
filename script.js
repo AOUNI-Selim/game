@@ -139,9 +139,9 @@ usineOvni = setInterval(() => {
     if (ovnis != undefined) {
       for (let i = 0; i < ovnis.length; i++) {
         let ovni = ovnis[i]; 
-        let ovniTop = parseInt( window.getComputedStyle(ovni).getPropertyValue('top'))
+        let ovniTop = parseInt( window.getComputedStyle(ovni).getPropertyValue('top'));
        
-        let ovniLeft = parseInt( window.getComputedStyle(ovni).getPropertyValue('left'))
+        let ovniLeft = parseInt( window.getComputedStyle(ovni).getPropertyValue('left'));
         
 
         if (ovniTop >= 470) {          
